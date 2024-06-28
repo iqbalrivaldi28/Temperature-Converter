@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.temperatureconverter.ui.theme.TemperatureConverterTheme
+import com.example.temperatureconverter.utils.convertToFahrenheit
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +57,9 @@ fun StatefulTemperatureInput(modifier: Modifier = Modifier) {
     var input by remember {
         mutableStateOf("")
     }
-    var output = ""
+    var output by remember {
+        mutableStateOf("")
+    }
 
     Column(
         modifier = modifier.padding(8.dp)
@@ -71,6 +74,7 @@ fun StatefulTemperatureInput(modifier: Modifier = Modifier) {
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
             onValueChange = {
                 input = it
+                output = convertToFahrenheit(it)
             }
         )
         Text(
