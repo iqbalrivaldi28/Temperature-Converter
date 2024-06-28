@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.temperatureconverter.codelabs.TwoWayConverterApp
 import com.example.temperatureconverter.state.StatefulTemperatureInput
 import com.example.temperatureconverter.state.StatelessTemperatureApp
 import com.example.temperatureconverter.ui.theme.TemperatureConverterTheme
@@ -53,8 +54,11 @@ fun MainApp(modifier: Modifier = Modifier) {
     ) {
         StatefulTemperatureInput()
         Spacer(modifier = Modifier.padding(16.dp))
-        StatelessTemperatureApp()
 
+        StatelessTemperatureApp()
+        Spacer(modifier = Modifier.padding(16.dp))
+
+        TwoWayConverterApp()
     }
 }
 
