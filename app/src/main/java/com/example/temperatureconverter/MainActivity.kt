@@ -24,6 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.temperatureconverter.state.StatefulTemperatureInput
+import com.example.temperatureconverter.state.StatelessTemperatureApp
 import com.example.temperatureconverter.ui.theme.TemperatureConverterTheme
 import com.example.temperatureconverter.utils.convertToFahrenheit
 
@@ -55,87 +57,6 @@ fun MainApp(modifier: Modifier = Modifier) {
 
     }
 }
-
-@Composable
-fun StatefulTemperatureInput(modifier: Modifier = Modifier) {
-    var input by remember {
-        mutableStateOf("")
-    }
-    var output by remember {
-        mutableStateOf("")
-    }
-
-    Column(
-        modifier = modifier.padding(8.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.stateful_converter),
-            style = MaterialTheme.typography.headlineSmall
-        )
-        OutlinedTextField(
-            value = input,
-            label = { Text(stringResource(R.string.enter_celsius))},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = {
-                input = it
-                output = convertToFahrenheit(it)
-            }
-        )
-        Text(
-            stringResource(R.string.temperature_fahrenheit, output)
-        )
-    }
-}
-
-
-@Composable
-fun StatelessTemperatureInput(
-    input: String,
-    output: String,
-    onValueChange: (String) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Column(
-        modifier = modifier.padding(8.dp)
-    ) {
-        Text(
-            text = stringResource(R.string.stateless_converter),
-            style = MaterialTheme.typography.headlineSmall
-        )
-        OutlinedTextField(
-            value = input,
-            label = { Text(stringResource(R.string.enter_celsius))},
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            onValueChange = onValueChange
-        )
-        Text(stringResource(R.string.temperature_fahrenheit, output))
-    }
-}
-
-
-@Composable
-fun StatelessTemperatureApp(modifier: Modifier = Modifier) {
-    var input by remember {
-        mutableStateOf("")
-    }
-
-    var output by remember {
-        mutableStateOf("")
-    }
-
-
-    Column {
-        StatelessTemperatureInput(
-            input = input,
-            output = output,
-            onValueChange = {
-                input = it
-                output = convertToFahrenheit(it)
-            }
-        )
-    }
-}
-
 
 @Preview(showBackground = true)
 @Composable
