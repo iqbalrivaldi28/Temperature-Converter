@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -49,6 +50,9 @@ fun MainApp(modifier: Modifier = Modifier) {
         modifier = modifier.verticalScroll(rememberScrollState())
     ) {
         StatefulTemperatureInput()
+        Spacer(modifier = Modifier.padding(16.dp))
+        StatelessTemperatureApp()
+
     }
 }
 
@@ -79,6 +83,55 @@ fun StatefulTemperatureInput(modifier: Modifier = Modifier) {
         )
         Text(
             stringResource(R.string.temperature_fahrenheit, output)
+        )
+    }
+}
+
+
+@Composable
+fun StatelessTemperatureInput(
+    input: String,
+    output: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier.padding(8.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.stateless_converter),
+            style = MaterialTheme.typography.headlineSmall
+        )
+        OutlinedTextField(
+            value = input,
+            label = { Text(stringResource(R.string.enter_celsius))},
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            onValueChange = onValueChange
+        )
+        Text(stringResource(R.string.temperature_fahrenheit, output))
+    }
+}
+
+
+@Composable
+fun StatelessTemperatureApp(modifier: Modifier = Modifier) {
+    var input by remember {
+        mutableStateOf("")
+    }
+
+    var output by remember {
+        mutableStateOf("")
+    }
+
+
+    Column {
+        StatelessTemperatureInput(
+            input = input,
+            output = output,
+            onValueChange = {
+                input = it
+                output = convertToFahrenheit(it)
+            }
         )
     }
 }
